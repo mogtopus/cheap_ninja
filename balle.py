@@ -8,7 +8,7 @@ class Balle:
         self.r = r
         self.g = g
         self.b = b
-        
+# test        
     def gravity(self): #pauline
         pass
         
