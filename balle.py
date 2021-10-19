@@ -32,5 +32,5 @@ class Balle:
         self.y = self.y + self.vy     
 
     def affiche(self):
-        fill(self.r self.g , self.b)
+        fill(self.r , self.g , self.b)
         circle(self.x , self.y , self.diam)
