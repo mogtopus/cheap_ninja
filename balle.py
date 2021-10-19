@@ -10,11 +10,8 @@ class Balle:
         self.r = r
         self.g = g
         self.b = b
-<<<<<<< HEAD
         self.ray = diam/2
-=======
         self.z = 0
->>>>>>> f888d2e6931937fc57074f4ec1e0c08af795a15f
         
     def gravity(self):
         pass
@@ -40,7 +37,7 @@ class Balle:
         elif Balle.YMAX <= self.y + self.ray:
             self.y = Balle.YMAX -self.ray
             self.vy = -self.vy
-        
+        self.efface()
         self.deplace()
         self.affiche()
     
@@ -53,6 +50,11 @@ class Balle:
     def deplace(self):
         self.x = self.x + self.vx
         self.y = self.y + self.vy     
+    
+    def efface(self):
+        fill(0,0,0)
+        circle(self.x , self.y , self.diam+1)
+
 
     def affiche(self):
         fill(self.r , self.g , self.b)
