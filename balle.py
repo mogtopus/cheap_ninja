@@ -1,3 +1,4 @@
+from math import pi as PI
 class Balle:
 
     XMAX = 750
@@ -14,7 +15,7 @@ class Balle:
         self.b = b
         self.ray = diam/2
         self.z = 0
-        
+        self.cycle = 1000
     def gravity(self):
         pass
         
@@ -45,9 +46,34 @@ class Balle:
         self.affiche()
     
     def special(self):
-        pass
-        # arrive depuis le bas de l'ecran et glisse jusqu'au milieu
-        # se met à tourner de plus en plus vite
+        def fokin_small_circle(x = 0 , y = 0):
+            fill(250,100,100)
+            ellipse(x , y , self.diam , self.diam/5)
+        def fokin_twisty_mothafuka():
+
+            pushMatrix()
+            translate(self.x , self.y)
+            rotate(PI/self.cycle * self.z)
+            fokin_small_circle()
+
+            popMatrix()
+
+            self.z = 1 if self.z == self.cycle * 2 else self.z + 1
+            self.cycle = self.cycle - 10 if self.cycle != 10 else 10
+
+        if self.y > Balle.YMAX/2:
+            self.efface()
+            self.deplace()
+            
+            self.affiche()
+            fokin_small_circle(self.x , self.y)
+        else : 
+            
+
+            self.efface()
+            self.affiche()
+            fokin_twisty_mothafuka()
+        
 
     def anime(self):
         pass
