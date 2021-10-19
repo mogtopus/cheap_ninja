@@ -1,7 +1,7 @@
 from balle import *
 
 def setup():
-    size(500,500)
+    size(Balle.XMAX,Balle.YMAX)
     frameRate(60)
 def draw():
     
