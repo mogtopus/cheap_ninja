@@ -1,6 +1,8 @@
 class Balle:
+
     XMAX = 750
     YMAX = 500
+
     def __init__(self , x , y , vx , vy , diam , r , g , b):
         self.x = x
         self.y = y
@@ -37,10 +39,16 @@ class Balle:
         elif Balle.YMAX <= self.y + self.ray:
             self.y = Balle.YMAX -self.ray
             self.vy = -self.vy
+
         self.efface()
         self.deplace()
         self.affiche()
     
+    def special(self):
+        pass
+        # arrive depuis le bas de l'ecran et glisse jusqu'au milieu
+        # se met à tourner de plus en plus vite
+
     def anime(self):
         pass
     
