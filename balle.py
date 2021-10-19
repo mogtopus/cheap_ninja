@@ -8,13 +8,13 @@ class Balle:
         self.r = r
         self.g = g
         self.b = b
-# test        
+        
     def gravity(self): #pauline
         pass
         
     def sinus(self):
         pass
-#désolé de laisser des test je nettoie après    
+    
     def bounce(self):
         pass
     
