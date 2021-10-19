@@ -10,13 +10,21 @@ class Balle:
         self.r = r
         self.g = g
         self.b = b
+<<<<<<< HEAD
         self.ray = diam/2
+=======
+        self.z = 0
+>>>>>>> f888d2e6931937fc57074f4ec1e0c08af795a15f
         
     def gravity(self):
         pass
         
     def sinus(self):
-        pass
+        circle(self.x,self.y+cos(self.z)*20,50)
+        self.x = self.x+1
+        self.z = self.z+0.1
+        if self.z > 2*PI:
+            self.z=0
     
     def bounce(self):
         if self.x - self.ray <= 0:
