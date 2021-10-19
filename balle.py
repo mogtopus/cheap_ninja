@@ -14,7 +14,7 @@ class Balle:
         
     def sinus(self):
         pass
-    
+#désolé de laisser des test je nettoie après    
     def bounce(self):
         pass
     
