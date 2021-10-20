@@ -19,7 +19,9 @@ class Balle:
         self.type = type  #1: gravity 2: sinus 3: bounce 4: special
 
     def gravity(self):
-        pass
+        self.y = self.y + vy
+        if self.y > 375:
+            self.y = self.y - vy
         
 
     def sinus(self):
