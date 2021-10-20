@@ -25,11 +25,14 @@ class Balle:
         
 
     def sinus(self):
-        circle(self.x,self.y+cos(self.z)*20,50)
-        self.x = self.x+1
+        self.vx=3
+        self.vy=sin(self.z)*5
         self.z = self.z+0.1
         if self.z > 2*PI:
             self.z=0
+        self.efface()
+        self.deplace()
+        self.affiche()
     
 
     def bounce(self):

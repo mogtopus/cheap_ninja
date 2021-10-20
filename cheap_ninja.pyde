@@ -10,7 +10,13 @@ def setup():
 les_balles = []
 
 def liste_jeu(liste):
+<<<<<<< HEAD
     liste.append(Balle(Balle.XMAX/2 , 400 , 0 , -4 , 200 , 100,150,200 , 4))
+=======
+    liste.append(Balle(Balle.XMAX/2 , 400 , 0 , -5 , 100 , 100,150,200 , 1))
+    liste.append(Balle(Balle.XMAX/2 , 200 , 0 , 0 , 100 , 100,150,200 ,2 ))
+
+>>>>>>> c328b2d0961de280119da253a78f34612b4194d6
 
 mouse = False
 def mouse():
