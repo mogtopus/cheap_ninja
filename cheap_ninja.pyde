@@ -13,6 +13,7 @@ def liste_jeu(liste):
 
 
 def draw():
+    print(mouseX , mouseY)
     global les_balles
     for balle in les_balles:
-        balle.anime(les_balles)
+        balle.anime(les_balles , mousePressed , mouseX , mouseY)
