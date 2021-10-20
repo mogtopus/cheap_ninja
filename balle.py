@@ -73,6 +73,7 @@ class Balle:
             self.efface()
             self.affiche()
             fokin_twisty_mothafuka()
+
         
 
     def anime(self):
