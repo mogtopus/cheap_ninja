@@ -10,7 +10,7 @@ les_balles = []
 
 def liste_jeu(liste):
     liste.append(Balle(Balle.XMAX/2 , 400 , 0 , -5 , 100 , 100,150,200 , 1))
-    liste.append(Balle(Balle.XMAX/2 , 200 , 0 , 0 , 100 , 100,150,200 , 2))
+    liste.append(Balle(Balle.XMAX/2 , 200 , 0 , 0 , 100 , 100,150,200 ,2 ))
 
 
 def draw():

@@ -14,6 +14,7 @@ class Balle:
         self.g = g
         self.b = b
         self.ray = diam/2
+        self.z = 0
         self.cycle = 1000
         self.type = type  #1: gravity 2: sinus 3: bounce 4: special
 
@@ -25,11 +26,14 @@ class Balle:
         
 
     def sinus(self):
-
-        self.vx = self.vx+1
-        self.vy = self.vy+0.1
-        if self.vy > 2*PI:
-            self.vy=0
+        self.vx=3
+        self.vy=sin(self.z)*5
+        self.z = self.z+0.1
+        if self.z > 2*PI:
+            self.z=0
+        self.efface()
+        self.deplace()
+        self.affiche()
     
 
     def bounce(self):
