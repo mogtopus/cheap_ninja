@@ -72,10 +72,10 @@ class Balle:
                 self.cycle = 2000
                 self.efface()
                 liste.remove(self)
-                liste.append(Balle(self.x , self.y , 7 , 7 , self.diam/2 , self.r , self.g , self.b , 3))
-                liste.append(Balle(self.x , self.y , 7 , -7 , self.diam/2 , self.r , self.g , self.b , 3))
-                liste.append(Balle(self.x , self.y , -7 , 7 , self.diam/2 , self.r , self.g , self.b , 3))
-                liste.append(Balle(self.x , self.y , -7 , -7 , self.diam/2 , self.r , self.g , self.b , 3))
+                liste.append(Balle(self.x , self.y , 3 , 3 , self.diam/2 , self.r , self.g , self.b , 3))
+                liste.append(Balle(self.x , self.y , 3 , -3 , self.diam/2 , self.r , self.g , self.b , 3))
+                liste.append(Balle(self.x , self.y , -3 , 3 , self.diam/2 , self.r , self.g , self.b , 3))
+                liste.append(Balle(self.x , self.y , -3 , -3 , self.diam/2 , self.r , self.g , self.b , 3))
 
 
         if self.y > Balle.YMAX/2:
@@ -91,7 +91,7 @@ class Balle:
 
         
 
-    def anime(self , liste):
+    def anime(self , liste , click , x , y):
         if self.type == 1:
             self.gravity()
         elif self.type == 2:
@@ -100,10 +100,22 @@ class Balle:
             self.bounce()
         else:
             self.special(liste)
-    
+        if click:
+            print(x,y)
+            if self.est_dans(x , y):
+                self.dead(liste , x , y)
 
-    def est_dans(self):
-        pass
+    def dead(self , liste , x , y):
+
+        self.efface()
+        liste.remove(self)
+
+
+
+    def est_dans(self , x , y):
+        def distance(x1 , x2 , y1 , y2):
+            return ((x2 - x1)**2 + (y2 - y1)**2)**0.5
+        return distance(self.x , x , self.y , y) <= self.ray
 
 
     def deplace(self):
