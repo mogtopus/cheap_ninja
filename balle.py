@@ -15,14 +15,13 @@ class Balle:
         self.b = b
         self.ray = diam/2
         self.z = 0
-        self.cycle = 1000
+        self.cycle = 0
         self.type = type  #1: gravity 2: sinus 3: bounce 4: special
 
     def gravity(self):
-        self.vy = self.vy + 0.15
-        self.efface()
-        self.deplace()
-        self.affiche()
+        self.y = self.y + vy
+        if self.y > 375:
+            self.y = self.y - vy
         
 
     def sinus(self):
@@ -54,30 +53,29 @@ class Balle:
 
     
 
-    def special(self , liste):
+    def special(self , liste , click , xmouse , ymouse):
         def fokin_small_circle(x = 0 , y = 0):
             fill(250,100,100)
             ellipse(x , y , self.diam , self.diam/5)
 
         def fokin_twisty_mothafuka():
+            print(self.cycle)
             pushMatrix()
             translate(self.x , self.y)
-            rotate(PI/self.cycle * self.z)
+            rotate(PI* self.cycle/2000 * self.z)
             fokin_small_circle()
 
             popMatrix()
-
-            self.z = 1 if self.z == self.cycle * 2 else self.z + 1
-            self.cycle = self.cycle - 50
-            if self.cycle < 50:
-                self.cycle = 2000
-                self.efface()
-                liste.remove(self)
-                liste.append(Balle(self.x , self.y , 3 , 3 , self.diam/2 , self.r , self.g , self.b , 3))
-                liste.append(Balle(self.x , self.y , 3 , -3 , self.diam/2 , self.r , self.g , self.b , 3))
-                liste.append(Balle(self.x , self.y , -3 , 3 , self.diam/2 , self.r , self.g , self.b , 3))
-                liste.append(Balle(self.x , self.y , -3 , -3 , self.diam/2 , self.r , self.g , self.b , 3))
-
+            self.z = self.z+1 
+            if click and self.est_dans(xmouse , ymouse):
+                self.cycle = self.cycle +150
+                if self.cycle > 1500:
+                    self.efface()
+                    liste.remove(self)
+                    liste.append(Balle(self.x , self.y , 3 , 3 , self.diam/2 , self.r , self.g , self.b , 3))
+                    liste.append(Balle(self.x , self.y , 3 , -3 , self.diam/2 , self.r , self.g , self.b , 3))
+                    liste.append(Balle(self.x , self.y , -3 , 3 , self.diam/2 , self.r , self.g , self.b , 3))
+                    liste.append(Balle(self.x , self.y , -3 , -3 , self.diam/2 , self.r , self.g , self.b , 3))
 
         if self.y > Balle.YMAX/2:
             self.efface()
@@ -100,9 +98,9 @@ class Balle:
         elif self.type == 3:
             self.bounce()
         else:
-            self.special(liste)
-        if click:
-            print(x,y)
+            self.special(liste , click , x , y)
+
+        if click and self.type != 4:
             if self.est_dans(x , y):
                 self.dead(liste , x , y)
 
