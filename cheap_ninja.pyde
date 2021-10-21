@@ -1,5 +1,6 @@
 from balle import *
 from menu import *
+import time
 
 def setup():
     size(Balle.XMAX,Balle.YMAX)
@@ -10,32 +11,35 @@ def setup():
 les_balles = []
 
 def liste_jeu(liste):
-<<<<<<< HEAD
-    liste.append(Balle(Balle.XMAX/2 , 400 , 0 , -4 , 200 , 100,150,200 , 4))
-=======
-    liste.append(Balle(Balle.XMAX/2 , 400 , 0 , -5 , 100 , 100,150,200 , 1))
-    liste.append(Balle(Balle.XMAX/2 , 200 , 0 , 0 , 100 , 100,150,200 ,2 ))
+    liste.append(Balle(Balle.XMAX/2 , 400 , 0 , -4 , 100 , 100,150,200 , 4 , 1))
+    liste.append(Balle(Balle.XMAX/2 , 400 , 0 , -5 , 100 , 100,150,200 , 1 , 1))
+    liste.append(Balle(Balle.XMAX/2 , 200 , 0 , 0 , 100 , 100,150,200 ,2 , 1))
 
->>>>>>> c328b2d0961de280119da253a78f34612b4194d6
+
 
 mouse = False
-def mouse():
-    global temp_mouse
-    if mousePressed:
-        if temp_mouse == True:
-            return False
-        else:
-            temp_mouse = True
-            return True
-    else:
-        temp_mouse = False
-        return False
-    
+
+precedent = False
+b = 0
+
+def move_mouse():
+    pass
+
 def draw():
-    global les_balles , temp_mouse
+
+    background(0,0,0)
+    global les_balles , precedent
+    if mousePressed:
+        if precedent == False:
+            precedent = True
+            mouse = True
+        else:
+            mouse = False   
+    else:
+        precedent = False
+        mouse = False
+
     for balle in les_balles:
-        balle.anime(les_balles , mouse() , mouseX , mouseY)
-        
-def mousePressed():
-    global mouse
-    
+        print(mouse)
+        balle.anime(les_balles, mouse , mouseX , mouseY)
+        print(mouse)
