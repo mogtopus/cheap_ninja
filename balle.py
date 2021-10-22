@@ -54,37 +54,27 @@ class Balle:
 
     
 
-    def special(self , liste , click , xmouse , ymouse):
-        def fokin_small_circle(x = 0 , y = 0):
+    def tournant(self , liste , click , xmouse , ymouse):
+        def helice(x = 0 , y = 0):
             fill(250,100,100)
             ellipse(x , y , self.diam , self.diam/5)
 
-        def fokin_twisty_mothafuka():
+        def helice_tournante():
             pushMatrix()
             translate(self.x , self.y)
             rotate(PI* self.cycle/2000 * self.z)
-            fokin_small_circle()
-
+            helice()
             popMatrix()
-            self.z = self.z+1 
-            if click and self.est_dans(xmouse , ymouse):
-                self.cycle = self.cycle +150
-                if self.cycle > 1500:
-                    self.vie = 3
-                    #liste.remove(self)
-                    liste.append(Balle(self.x+self.ray , self.y+self.ray , 3 , 3 , self.diam/1.5 , self.r , self.g , self.b , 3 , 1))
-                    liste.append(Balle(self.x+self.ray , self.y-self.ray , 3 , -3 , self.diam/1.5 , self.r , self.g , self.b , 3 , 1))
-                    liste.append(Balle(self.x-self.ray , self.y+self.ray , -3 , 3 , self.diam/1.5 , self.r , self.g , self.b , 3 , 1))
-                    liste.append(Balle(self.x-self.ray , self.y-self.ray , -3 , -3 , self.diam/1.5 , self.r , self.g , self.b , 3 , 1))
+            self.z = self.z+1         
 
         if self.y > Balle.YMAX/2:
             self.deplace()
             
             self.affiche()
-            fokin_small_circle(self.x , self.y)
+            helice(self.x , self.y)
         else : 
             self.affiche()
-            fokin_twisty_mothafuka()
+            helice_tournante()
 
         
 
@@ -97,15 +87,24 @@ class Balle:
             elif self.type == 3:
                 self.bounce()
             else:
-                self.special(liste , click , mx , my)
+                self.tournant(liste , click , mx , my)
 
             if click and self.est_dans(mx , my):
                 if self.type != 4:
-                    self.dead(liste)
+                    self.dead()
+                else:
+                    self.cycle = self.cycle + 150
+                    if self.cycle > 600:
+                        self.dead(liste)
         
 
-    def dead(self):
+    def dead(self , liste = None):
         self.vie = 3
+        if self.type == 4:
+            liste.append(Balle(self.x+self.ray , self.y+self.ray , 3 , 3 , self.diam/1.5 , self.r , self.g , self.b , 3 , 1))
+            liste.append(Balle(self.x+self.ray , self.y-self.ray , 3 , -3 , self.diam/1.5 , self.r , self.g , self.b , 3 , 1))
+            liste.append(Balle(self.x-self.ray , self.y+self.ray , -3 , 3 , self.diam/1.5 , self.r , self.g , self.b , 3 , 1))
+            liste.append(Balle(self.x-self.ray , self.y-self.ray , -3 , -3 , self.diam/1.5 , self.r , self.g , self.b , 3 , 1))
 
 
 
