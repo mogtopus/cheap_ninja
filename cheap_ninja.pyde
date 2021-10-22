@@ -6,14 +6,11 @@ def setup():
     size(Balle.XMAX,Balle.YMAX)
     frameRate(60)
     background(0,0,0)
-    liste_jeu(les_balles)
+    #liste_jeu(les_balles)
     
-les_balles = []
+les_balles = [Balle(4) , Balle(5)]
 
-def liste_jeu(liste):
-    liste.append(Balle(Balle.XMAX/2 , 400 , 0 , -4 , 100 , 100,150,200 , 4 , 1))
-    liste.append(Balle(Balle.XMAX/2 , 400 , 0 , -5 , 100 , 100,150,200 , 1 , 1))
-    liste.append(Balle(Balle.XMAX/2 , 200 , 0 , 0 , 100 , 100,150,200 ,2 , 1))
+
 
 
 
@@ -40,6 +37,4 @@ def draw():
         mouse = False
 
     for balle in les_balles:
-        print(mouse)
         balle.anime(les_balles, mouse , mouseX , mouseY)
-        print(mouse)
