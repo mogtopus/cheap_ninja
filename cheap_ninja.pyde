@@ -1,31 +1,24 @@
-from balle import *
 from menu import *
-import time
-
+from balle import *
+from salves import *
 def setup():
+    global les_balles
     size(Balle.XMAX,Balle.YMAX)
     frameRate(60)
     background(0,0,0)
-    #liste_jeu(les_balles)
-    
-les_balles = [Balle(4) , Balle(5)]
-
-
-
-
-
+    init(les_balles)
+timer = 0
+les_balles = []
+gamestate = 0
 mouse = False
-
 precedent = False
-b = 0
 
-def move_mouse():
-    pass
 
 def draw():
+    global gamestate , les_balles , precedent , timer
+    update_liste()
+    ajoute_balles(les_balles)
 
-    background(0,0,0)
-    global les_balles , precedent
     if mousePressed:
         if precedent == False:
             precedent = True
@@ -35,6 +28,15 @@ def draw():
     else:
         precedent = False
         mouse = False
-
-    for balle in les_balles:
-        balle.anime(les_balles, mouse , mouseX , mouseY)
+        
+    if Balle.gamestate == 0:
+        background(0,0,0)
+        
+        
+        for balle in les_balles:
+            balle.anime(les_balles, mouse , mouseX , mouseY)
+    elif Balle.gamestate == 2:
+        background(255,0,0)
+    
+    
+    timer = timer + 1

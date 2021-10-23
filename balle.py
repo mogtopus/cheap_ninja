@@ -4,7 +4,7 @@ class Balle:
 
     XMAX = 750
     YMAX = 500
-
+    gamestate = 0
     def __init__(self , type , option = None , x = None , y = None):
         #########################################
         #GROS CHANGEMENT SI VOUS TROUVEZ CA MOCHE DITES MOI ET ON LE RETIRE
@@ -12,17 +12,17 @@ class Balle:
         ###########################################
 
         self.type = type
-        self.vie = 1
         if self.type == 1: #gravity
-            self.diam = 40
-            if otpion == 'right':
-                self.x = random(Balle.XMAX/ 2 , balle.XMAX)
+            self.diam = 80
+            self.ray = self.diam/2
+            if option == 'right':
+                self.x = random(Balle.XMAX/ 2 , Balle.XMAX)
                 self.vx = -3
             else:
                 self.x = random(0 , Balle.XMAX/ 2)
                 self.vx = 3
             self.y = Balle.YMAX
-            self.vy = -5
+            self.vy = random(-7 , -5)
             self.r , self.g , self.b = 50 , 50, 200
 
         elif self.type == 2: #sinus
@@ -42,7 +42,7 @@ class Balle:
         elif self.type == 3: # bouncy
             self.x = x
             self.y = y
-            self.diam = 40
+            self.diam = 60
             self.ray = self.diam/2
             if option == "top_r":
                 self.vx = 5
@@ -62,7 +62,7 @@ class Balle:
             self.diam = 100
             self.ray = self.diam/2
             self.cycle = 0
-            self.x = Balle.XMAX/2
+            self.x = random(0 + self.diam*2 , Balle.XMAX - self.diam*2)
             self.y = Balle.YMAX
             self.vx = 0
             self.vy = -5
@@ -74,7 +74,7 @@ class Balle:
             self.y = random(0 , Balle.YMAX)
             self.vx = random(-10 , 10)
             self.vy = random(-10 , 10)
-            self.diam = random(40 , 100)
+            self.diam = random(70 , 100)
             self.ray = self.diam/2
             self.r , self.g , self.b = 255 , 0 , 0
             self.cycle = 0
@@ -82,17 +82,35 @@ class Balle:
 
     def gravity(self):
         self.deplace()
-        self.vy = self.vy + 0.15
+        self.vy = self.vy + 0.07
+
+        if self.x - self.ray <= 0:
+            self.x = 0 + self.ray
+            self.vx = -self.vx #-0.2
+        elif Balle.XMAX <= self.x + self.ray:
+            self.x = Balle.XMAX - self.ray
+            self.vx = -self.vx #+ 0.2
+
+
+        if Balle.YMAX <= self.y + self.ray:
+            self.y = Balle.YMAX -self.ray
+            self.vy = -self.vy #+0.2
         self.affiche()
         
 
     def sinus(self):
         self.deplace()
-        self.vx=3
-        self.vy=sin(self.z)*5
-        self.z = self.z+0.1
-        if self.z > 2*PI:
+        if self.z >= 2*PI:
             self.z=0
+        self.vy=sin(self.z) * 5
+        self.z = self.z+ PI/10
+
+        if self.x -self.ray < 0:
+            self.x = 0 + self.ray
+            self.vx = -self.vx
+        elif Balle.XMAX < self.x + self.ray :
+            self.x = Balle.XMAX - self.ray
+            self.vx = -self.vx
         self.affiche()
     
 
@@ -144,11 +162,15 @@ class Balle:
             fill(self.r , self.g , self.b)
             pushMatrix()
             translate(self.x , self.y)
+            rotate(self.cycle)
             for i in range(16):
-                rotate(PI/8 + self. cycle)
+                rotate(PI/8 + self.cycle/10)
                 triangle(0 - self.ray , 0  , 0 + self.ray , 0 , 0 , self.ray)
             popMatrix()
             stroke(0)
+            self.cycle = self.cycle + PI/300
+            if self.cycle >= 2*PI:
+                self.cycle = 0
 
         self.deplace()
         if self.x - self.ray <= 0:
@@ -167,36 +189,33 @@ class Balle:
         dessine()
 
     def anime(self , liste , click , mx , my):
-        if self.vie == 1:
-            if self.type == 1:
-                self.gravity()
-            elif self.type == 2:
-                self.sinus()
-            elif self.type == 3:
-                self.bounce()
-            elif self.type == 4:
-                self.tournant(liste , click , mx , my)
-            else : self. piegee()
+        if self.type == 1:
+            self.gravity()
+        elif self.type == 2:
+            self.sinus()
+        elif self.type == 3:
+            self.bounce()
+        elif self.type == 4:
+            self.tournant(liste , click , mx , my)
+        else : self. piegee()
 
-            if click and self.est_dans(mx , my):
-                if self.type != 4:
-                    self.dead()
-                else:
-                    self.cycle = self.cycle + 150
-                    if self.cycle > 600:
-                        self.dead(liste)
-        
+        if click and self.est_dans(mx , my):
+            if self.type != 4:
+                self.dead(liste)
+            else:
+                self.cycle = self.cycle + 150
+                if self.cycle > 600:
+                    self.dead(liste)
 
-    def dead(self , liste = None):
-        self.vie = 3
+    def dead(self , liste):
+        liste.remove(self)
         if self.type == 4:
-            liste.insert(0 , Balle(3 , 'top_r' , self.x + self.ray , self.y - self. ray))
-            liste.insert(0 , Balle(3 , 'top_l' , self.x -self.ray , self.y - self.ray))
-            liste.insert(0 , Balle(3 , 'bottom_r' , self.x + self.ray , self.y + self.ray))
-            liste.insert(0 , Balle(3 , 'bottom_l' , self.x -self.ray , self.y +self.ray))
-
-        if self.type == 5:
-            print("perdu")
+            liste.append(Balle(3 , 'top_r' , self.x + self.ray , self.y - self. ray))
+            liste.append(Balle(3 , 'top_l' , self.x -self.ray , self.y - self.ray))
+            liste.append(Balle(3 , 'bottom_r' , self.x + self.ray , self.y + self.ray))
+            liste.append(Balle(3 , 'bottom_l' , self.x -self.ray , self.y +self.ray))
+        elif self.type == 5:
+            Balle.gamestate = 2
 
 
 
