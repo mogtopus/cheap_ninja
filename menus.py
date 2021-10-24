@@ -44,4 +44,8 @@ def button(texte , x , y , size_x , size_y , r , g , b):
     textSize(10)
     fill(0)
     text(texte , x , y)
-    
+
+def menu():
+    background(0,0,0)
+    if button("Jouer au jeu",275,200,200,100,255,255,255):
+        alle.gamestate = 1

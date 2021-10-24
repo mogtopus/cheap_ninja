@@ -40,9 +40,10 @@ def draw():
         for balle in les_balles:
             
             balle.anime(les_balles, mouse , mouseX , mouseY)
+    
     elif Balle.gamestate == 2:
-        #gameover()
-        pass
+        gameover()
+         
     elif Balle.gamestate == 3:
         regles()
     elif Balle.gamestate == 4:
