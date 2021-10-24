@@ -25,6 +25,10 @@ def victoire():
     textAlign(CENTER, TOP)
     textSize(20)
     fill(255)
+    if Balle.score > int(Balle.highscore.read()):
+        Balle.highscore.write(Balle.score)
+    Balle.highscore.close()
+        
     text("bravo vous avez reussi ce niveau" , Balle.XMAX/2 , 0)
     if button('menu' ,Balle.XMAX/2 , Balle.YMAX/2 , 100 , 50 , 255 , 255 , 255):
         Balle.gamestate = 1

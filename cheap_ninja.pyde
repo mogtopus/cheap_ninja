@@ -6,7 +6,7 @@ def setup():
     size(Balle.XMAX,Balle.YMAX)
     frameRate(60)
     background(0,0,0)
-    init(les_balles , niv_1)
+    init(les_balles , test)
 timer = 0
 les_balles = []
 gamestate = 0

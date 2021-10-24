@@ -1,10 +1,11 @@
 from math import pi as PI
 from random import randint as random
 class Balle:
-
+    highscore = open('score.txt',"a") 
     XMAX = 750
     YMAX = 500
     gamestate = 1
+    score = 0
     def __init__(self , type , option = None , x = None , y = None):
         """
         a partir du type de la balle l init assigne a l objet les attribus necessaires a son fonctionnement (vitesse postion couleur etc)
@@ -244,6 +245,9 @@ class Balle:
 
     def dead(self , liste):
         liste.remove(self)
+        if self.type != 'piegee' and self.type != 'tournante':
+            Balle.score = Balle.score + 1
+            
         if self.type == 'tournante':
             liste.append(Balle('bouncy' , 'top_r' , self.x + self.ray , self.y - self. ray))
             liste.append(Balle('bouncy' , 'top_l' , self.x -self.ray , self.y - self.ray))
