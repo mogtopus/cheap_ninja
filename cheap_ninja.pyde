@@ -1,4 +1,4 @@
-from menu import *
+from menus import *
 from balle import *
 from salves import *
 def setup():
@@ -12,13 +12,9 @@ les_balles = []
 gamestate = 0
 mouse = False
 precedent = False
-niveau = 1
 
-def draw():
-    global gamestate , les_balles , precedent , timer , niveau
-    update_liste(les_balles , niveau)
-    ajoute_balles(les_balles)
-
+def update_souris():
+    global mouse , precedent
     if mousePressed:
         if precedent == False:
             precedent = True
@@ -28,15 +24,27 @@ def draw():
     else:
         precedent = False
         mouse = False
-        
+
+def draw():
+    global gamestate , les_balles , precedent , timer , niveau
+    update_liste(les_balles)
+    ajoute_balles(les_balles)
+
+    update_souris()
     if Balle.gamestate == 0:
-        background(0,0,0)
+        #menu()
+        gameover()       
         
-        
+    elif Balle.gamestate == 1:
+        background(0,0,0)    
         for balle in les_balles:
+            
             balle.anime(les_balles, mouse , mouseX , mouseY)
     elif Balle.gamestate == 2:
-        background(255,0,0)
-    
-    
+        #gameover()
+        pass
+    elif Balle.gamestate == 3:
+        regles()
+    elif Balle.gamestate == 4:
+        victoire()
     timer = timer + 1

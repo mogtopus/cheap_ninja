@@ -4,7 +4,7 @@ class Balle:
 
     XMAX = 750
     YMAX = 500
-    gamestate = 0
+    gamestate = 1
     def __init__(self , type , option = None , x = None , y = None):
         #########################################
         #GROS CHANGEMENT SI VOUS TROUVEZ CA MOCHE DITES MOI ET ON LE RETIRE
@@ -12,7 +12,7 @@ class Balle:
         ###########################################
 
         self.type = type
-        if self.type == 1: #gravity
+        if self.type == 'gravity': #gravity
             self.diam = 80
             self.ray = self.diam/2
             if option == 'right':
@@ -22,10 +22,10 @@ class Balle:
                 self.x = random(0 , Balle.XMAX/ 2)
                 self.vx = 3
             self.y = Balle.YMAX
-            self.vy = random(-7 , -5)
+            self.vy = random(-6 , -4)
             self.r , self.g , self.b = 50 , 50, 200
 
-        elif self.type == 2: #sinus
+        elif self.type == 'sinus': #sinus
             self.diam = 50
             self.y = Balle.YMAX / 2
             self.z = 0
@@ -39,7 +39,7 @@ class Balle:
                 self.vx = 3
             self.r , self.g , self.b = 200 , 50, 200
         
-        elif self.type == 3: # bouncy
+        elif self.type == 'bouncy': # bouncy
             self.x = x
             self.y = y
             self.diam = 60
@@ -58,7 +58,7 @@ class Balle:
                 self.vy = 5
             self.r , self.g , self.b = 255 , 255 , 255
 
-        elif self.type == 4: #tournante
+        elif self.type == 'tournante': #tournante
             self.diam = 100
             self.ray = self.diam/2
             self.cycle = 0
@@ -134,7 +134,7 @@ class Balle:
 
     
 
-    def tournant(self , liste , click , xmouse , ymouse):
+    def tournant(self):
         def helice(x = 0 , y = 0):
             fill(250,100,100)
             ellipse(x , y , self.diam , self.diam/5)
@@ -169,7 +169,7 @@ class Balle:
             popMatrix()
             stroke(0)
             self.cycle = self.cycle + PI/300
-            if self.cycle >= 2*PI:
+            if self.cycle >= 4*PI:
                 self.cycle = 0
 
         self.deplace()
@@ -189,18 +189,18 @@ class Balle:
         dessine()
 
     def anime(self , liste , click , mx , my):
-        if self.type == 1:
+        if self.type == 'gravity':
             self.gravity()
-        elif self.type == 2:
+        elif self.type == 'sinus':
             self.sinus()
-        elif self.type == 3:
+        elif self.type == 'bouncy':
             self.bounce()
-        elif self.type == 4:
-            self.tournant(liste , click , mx , my)
+        elif self.type == 'tournante':
+            self.tournant()
         else : self. piegee()
 
         if click and self.est_dans(mx , my):
-            if self.type != 4:
+            if self.type != 'tournante':
                 self.dead(liste)
             else:
                 self.cycle = self.cycle + 150
@@ -209,13 +209,13 @@ class Balle:
 
     def dead(self , liste):
         liste.remove(self)
-        if self.type == 4:
-            liste.append(Balle(3 , 'top_r' , self.x + self.ray , self.y - self. ray))
-            liste.append(Balle(3 , 'top_l' , self.x -self.ray , self.y - self.ray))
-            liste.append(Balle(3 , 'bottom_r' , self.x + self.ray , self.y + self.ray))
-            liste.append(Balle(3 , 'bottom_l' , self.x -self.ray , self.y +self.ray))
-        elif self.type == 5:
-            Balle.gamestate = 2
+        if self.type == 'tournante':
+            liste.append(Balle('bouncy' , 'top_r' , self.x + self.ray , self.y - self. ray))
+            liste.append(Balle('bouncy' , 'top_l' , self.x -self.ray , self.y - self.ray))
+            liste.append(Balle('bouncy' , 'bottom_r' , self.x + self.ray , self.y + self.ray))
+            liste.append(Balle('bouncy' , 'bottom_l' , self.x -self.ray , self.y +self.ray))
+        elif self.type == 'piegee':
+            Balle.gamestate = 0
 
 
 
@@ -231,5 +231,6 @@ class Balle:
 
 
     def affiche(self):
+        noStroke()  
         fill(self.r , self.g , self.b)
         circle(self.x , self.y , self.diam)
