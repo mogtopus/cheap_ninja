@@ -82,19 +82,19 @@ class Balle:
             self.cycle = 0
 
 
-    def gravity(self):
+    def gravity(self):              #crée un effet de gravité et de lourdeur à la balle
         self.deplace()
-        self.vy = self.vy + 0.07
+        self.vy = self.vy + 0.07    #augmentation de la vitesse de la balle
 
-        if self.x - self.ray <= 0:
-            self.x = 0 + self.ray
+        if self.x - self.ray <= 0:  #condition si la balle dépasse le côté droite, elle va s'arrêter de bouger puis perdre de la vitesse 
+            self.x = 0 + self.ray   
             self.vx = -self.vx #-0.2
         elif Balle.XMAX <= self.x + self.ray:
             self.x = Balle.XMAX - self.ray
             self.vx = -self.vx #+ 0.2
 
 
-        if Balle.YMAX <= self.y + self.ray:
+        if Balle.YMAX <= self.y + self.ray:   #condition si la balle dépasse de la fenêtre en bas, elle va aussi s'arrêter puis perdre de la vitesse
             self.y = Balle.YMAX -self.ray
             self.vy = -self.vy #+0.2
         self.affiche()
