@@ -6,12 +6,13 @@ class Balle:
     YMAX = 500
     gamestate = 1
     def __init__(self , type , option = None , x = None , y = None):
-        #########################################
-        #GROS CHANGEMENT SI VOUS TROUVEZ CA MOCHE DITES MOI ET ON LE RETIRE
-        #l objectif est de simplifier la creation des balles
-        ###########################################
+        """
+        a partir du type de la balle l init assigne a l objet les attribus necessaires a son fonctionnement (vitesse postion couleur etc)
+        une option est utilisee pour certains types de balle pour preciser d ou ces derniers apparaissent
+        """
 
         self.type = type
+
         if self.type == 'gravity': #gravity
             self.diam = 80
             self.ray = self.diam/2
@@ -22,7 +23,7 @@ class Balle:
                 self.x = random(0 , Balle.XMAX/ 2)
                 self.vx = 3
             self.y = Balle.YMAX
-            self.vy = random(-6 , -4)
+            self.vy = random(-7 , -2)
             self.r , self.g , self.b = 50 , 50, 200
 
         elif self.type == 'sinus': #sinus
@@ -115,6 +116,12 @@ class Balle:
     
 
     def bounce(self):
+        """
+        gere les petites balles blanches qui rebondissent sur les murs
+
+        si la balle touche un bord de l ecran ou sort de l ecran on la repositionne a une position valide et on inverse sa vitesse x ou y
+        pour lui faire changer de direction
+        """
         self.deplace()
         if self.x - self.ray <= 0:
             self.x = 0 + self.ray
@@ -135,11 +142,22 @@ class Balle:
     
 
     def tournant(self):
+        """
+        balle bleue
+        """
         def helice(x = 0 , y = 0):
+            """
+            dessine l ellipse au milieu de la balle
+            """
             fill(250,100,100)
             ellipse(x , y , self.diam , self.diam/5)
 
         def helice_tournante():
+            """
+            fait tourner l helice en faisant une translation et une rotation de la matrice
+
+            phase de deplacement puis phase de rotation
+            """
             pushMatrix()
             translate(self.x , self.y)
             rotate(PI* self.cycle/2000 * self.z)
@@ -148,16 +166,30 @@ class Balle:
             self.z = self.z+1         
 
         if self.y > Balle.YMAX/2:
+            '''
+            deplacemen tant que la balle n a pas atteint la destination
+            '''
             self.deplace()
             self.affiche()
             helice(self.x , self.y)
         else : 
+            '''
+            deplacement termine on fait maintenant tourner l helice
+            '''
             self.affiche()
             helice_tournante()
 
         
     def piegee(self):
+        """
+        balle rouge piegee
+        """
         def dessine():
+            """
+            dessinee a partir de 16 triangles en rotation 
+            le cycle et ajoute a chaque rotation afin de produire l effet 'organique', la modification de sa valeur change la vitesse de rotation
+            ainsi que la vitesse de l effet de la balle
+            """
             noStroke()
             fill(self.r , self.g , self.b)
             pushMatrix()
@@ -173,6 +205,9 @@ class Balle:
                 self.cycle = 0
 
         self.deplace()
+        """
+        meme deplacements que pour la balle qui bouncy
+        """
         if self.x - self.ray <= 0:
             self.x = 0 + self.ray
             self.vx = -self.vx
@@ -231,6 +266,6 @@ class Balle:
 
 
     def affiche(self):
-        noStroke()  
+        stroke(0)  
         fill(self.r , self.g , self.b)
         circle(self.x , self.y , self.diam)
