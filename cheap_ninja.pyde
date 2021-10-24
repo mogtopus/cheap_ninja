@@ -6,17 +6,17 @@ def setup():
     size(Balle.XMAX,Balle.YMAX)
     frameRate(60)
     background(0,0,0)
-    init(les_balles)
+    init(les_balles , niv_1)
 timer = 0
 les_balles = []
 gamestate = 0
 mouse = False
 precedent = False
-
+niveau = 1
 
 def draw():
-    global gamestate , les_balles , precedent , timer
-    update_liste()
+    global gamestate , les_balles , precedent , timer , niveau
+    update_liste(les_balles , niveau)
     ajoute_balles(les_balles)
 
     if mousePressed:
