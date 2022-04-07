@@ -1,12 +1,5 @@
 # cheap_ninja
-## salut!
-je vous conseille d'utiliser l'app github desktop qui est très pratique pour voir les changements et les valider ou non mais vous pouvez aussi utiliser l'extention vscode qui est un peu plus compliquée à gérer je trouve mais bref. y'a aussi la version CLI de git si vous voulez
-ça ressemble un peu à àa:
-``` bash
-git pull
-#vous faites des trucs
-git commit -am "nom de votre commit"
-git push -u origin main
-git pull
-```
-voilà bon code!
+this is a game that we did as a small project for informatic class, the code needs otpimisations and english rewriting, i'll get to it at some point
+***
+howeverthe game is playable, in case of bugs between stages you may want to restart it at the end of the levels (qwick fix, you can just move the balls initialisation)<br>
+*you'll need processing >3.4 to play it correctly*
